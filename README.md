@@ -173,9 +173,9 @@ Faz a portabilidade do usuário
 
 <a name="tecnologia"></a>
 ## Tecnologias Utilizadas:
- * python
+ * Python 
  * Django
- * criptografia simetrica aes128 bytes
+ * Criptografia simetrica aes128 bytes
  * MongoDb
 
 
