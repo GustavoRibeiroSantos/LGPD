@@ -1,25 +1,26 @@
 # LGPD
-# Tópicos Avançados
-O projeto tem como proposta de desenvolver uma soluçao para problemas relacionados a LGPD.
+# Advanced Topics
+The project aims to develop a solution to problems related to the LGPD.
 
-### Exclusão de Dados
-Hoje, para uma empresa realizar a exclusão do dado de um dos seus clientes existe um processo um pouco complicado, pois há empresas que tem inumeros backup dos dados em várias bases. Exclusão de dados de clientes é simplificada, pois para deletar esses dados do banco de dados de algumas empresas, esse processo precisa ser feito em dezenas ou centenas de backups.
-A criptografia auxilia na privatização desses dados.
+### Data Deletion
+Today, for a company to delete the data of one of its customers there is a somewhat complicated process, because there are companies that have numerous backups of the data in various databases. Deleting customer data is simplified, because in order to delete this data from some companies' databases, this process needs to be done on dozens or hundreds of backups.
+Encryption helps to privatize this data.
 
-### Particionamento
-O particionamento funciona da seguinte maneira, partimos da tabela "vendas", onde nela tinham tanto os dados da venda quanto do cliente que fez a venda, a partir do momento que particionamos essa tabela, separamos os dados da venda e do cliente, sendo assim possivel apagar os dados do cliente sem precisar apagar a venda.
-Para fazer isso foi necessário primeiro fazer pegar os dados da tabela "vendas", e após isso foi feito a separação dos dados. Com os dados que foram separados inserimos em outros 2 bancos.
+### Partitioning
+Partitioning works as follows: we started from the “sales” table, where it contained both the data of the sale and the customer who made the sale. Once we partitioned this table, we separated the data of the sale and the customer, making it possible to delete the customer's data without having to delete the sale.
+In order to do this, we first had to retrieve the data from the “sales” table, after which we separated the data. With the data that was separated, we inserted it into 2 other databases.
 
-### Portabilidade de dados
-A portabilidade de dados é um direito incluído na Lei Geral de Proteção de Dados (LGPD) e no General Data Protection Regulation (GDPR) de que indivíduos obtenham e reutilizem seus dados pessoais para seus próprios propósitos em diferentes serviços. Portanto, de acordo com o art. 18 da LGPD, o titular de dados pessoais tem direito, mediante a requisição expressa, a obter do controlador, a portabilidade dos dados a outro fornecedor de serviço ou produto, observados os segredos comercial e industrial, garantindo em muitos casos, redução de custos de troca e impedindo o apriosionamento do consumidor. Exemplos de casos em que ocorra portabilidade de dados: mudança de empresa de telefonia/internet pelo consumidor, falência empresas, aquisição de empresas e etc. 
-No caso deste projeto, para assegurar a integridade e segurança dos dados do cliente, foi utilizado o protocolo SSL para efetuar a transferência destes para a nova base de dados controladora e portadora dos dados em questão. Por meio do CPF do cliente, todos os seus dados serão realocados para o novo banco de dados, sendo que a atomicidade da transação é garantida, uma vez que existe controle desde o início até o fim do tráfego dos dados e todos os blocos são executados integralmente (em caso de erro todas as operações que compõem a transação serão descartadas).
+### Data portability
+Data portability is a right included in the General Data Protection Act (LGPD) and the General Data Protection Regulation (GDPR) for individuals to obtain and reuse their personal data for their own purposes in different services. Therefore, according to art. 18 of the LGPD, the holder of personal data has the right, upon express request, to obtain from the controller the portability of the data to another service or product provider, observing commercial and industrial secrets, guaranteeing in many cases a reduction in exchange costs and preventing consumer harassment. Examples of cases in which data portability may occur include: consumers changing telephone/internet companies, companies going bankrupt, companies being taken over, etc. 
+In the case of this project, in order to ensure the integrity and security of the customer's data, the SSL protocol was used to transfer it to the new database that controls and carries the data in question. Using the customer's CPF, all their data will be relocated to the new database, and the atomicity of the transaction is guaranteed, since there is control from the beginning to the end of the data traffic and all the blocks are executed in full (in the event of an error, all the operations that make up the transaction will be discarded).
+
 <a name="estrutura"></a>
-# Estrutura do Projeto
-## Diagrama de caso de uso:
+# Project structure 
+## Use case diagram:
 ![Casos de uso](/caso_de_uso.PNG)
 
 
-## Modelo do banco de dados:
+##  Database model:
 **CryptoKey**
 ```json
 {
@@ -34,7 +35,7 @@ No caso deste projeto, para assegurar a integridade e segurança dos dados do cl
 }
 ```
 
-**Client(Tabela Portabilizada)**
+**Client(Portabilized table)**
 ```json
 {
   "_id": {
@@ -47,7 +48,7 @@ No caso deste projeto, para assegurar a integridade e segurança dos dados do cl
 }
 ```
 
-**Vendas(Tabela antes do particionamento)**
+**Vendas(Table before partitioning)**
 ```json
 {
   "_id": {
@@ -61,7 +62,7 @@ No caso deste projeto, para assegurar a integridade e segurança dos dados do cl
 ```
 
 
-**Cliente(Tabela depois do particionamento)**
+**Cliente(Table after partitioning)**
 ```json
 {
   "_id": {
@@ -78,7 +79,7 @@ No caso deste projeto, para assegurar a integridade e segurança dos dados do cl
 }
 ```
 
-**VendaSimples(Tabela depois do particionamento)**
+**VendaSimples(Table after partitioning)**
 ```json
 {
   "_id": {
@@ -91,13 +92,13 @@ No caso deste projeto, para assegurar a integridade e segurança dos dados do cl
 }
 ```
 
-## Documentação da API
+## API Documentation
 <details >
 <summary>
 <b>🟦GET</b>  /find_user/[CPF usuário]/ 
 </summary>
 
-Busca uma vaga por id.
+Search job by id.
 <p>Response 200:</p>
 
 ``` json
@@ -114,8 +115,8 @@ Busca uma vaga por id.
 <summary>
 <b>🟩POST</b> /insert_user
 </summary>
-Insere uma vaga.
-<p>Exemplo de parâmetro:</p>
+Insert a job
+<p>Exmaple of parameters:</p>
 
 ``` json
 {"produto_venda":"elementum at,",
@@ -132,7 +133,7 @@ Insere uma vaga.
 <summary>
 <b>🟥DELETE</b> delete_user/6735596[CPF do usuário]
 </summary>
-Exclui a vaga baseada no parâmetro, caso encontrada.
+Delete a job based on paramter, case it's found.
 <p>Response 200:</p>
 
 ``` json
@@ -153,11 +154,11 @@ Exclui a vaga baseada no parâmetro, caso encontrada.
 <summary>
 <b>🟩POST</b> /split_sale
 </summary>
-Tabela Particionada
+Partitioned Table
 <p>Response 200:</p>
 ``` json
 {
-   "message": "Currículo inserido com sucesso"
+   "message": "CV inserted sucessfully"
 }
 ```
 </details>
@@ -166,21 +167,14 @@ Tabela Particionada
 <summary>
 <b>🟩POST</b> client_data_portability/[CPF do usuário]
 </summary>
-Faz a portabilidade do usuário
+User portability
 <p>Response 200:</p>
 </details>
 
 
-<a name="tecnologia"></a>
-## Tecnologias Utilizadas:
+<a name="tecnology"></a>
+## Technologies used:
  * Python 
  * Django
- * Criptografia simetrica aes128 bytes
+ * Symmetric cryptography aes128 bytes
  * MongoDb
-
-
-<a name="equipe"></a>
-# INTEGRANTES
- * GUSTAVO RIBEIRO DOS SANTOS 
- * ARTHUR CARDOSO RINALDI DA SILVA
- * VINICIUS FERNANDES DE LIMA 
