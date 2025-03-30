@@ -131,7 +131,7 @@ Insert a job
 
 <details>
 <summary>
-<b>🟥DELETE</b> delete_user/6735596[CPF do usuário]
+<b>🟥DELETE</b> delete_user/6735596[User ID]
 </summary>
 Delete a job based on paramter, case it's found.
 <p>Response 200:</p>
@@ -165,7 +165,7 @@ Partitioned Table
 
 <details>
 <summary>
-<b>🟩POST</b> client_data_portability/[CPF do usuário]
+<b>🟩POST</b> client_data_portability/[User ID]
 </summary>
 User portability
 <p>Response 200:</p>
